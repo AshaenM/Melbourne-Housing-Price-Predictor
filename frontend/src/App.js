@@ -190,14 +190,14 @@ function App() {
 
     try {
       // Axios call to the backend to predict house price
-      const response = await axios.get(`http://localhost:8000/predict/${formData.bathrooms}/${formData.rooms}/${formData.distance}/${formData.bedrooms}/${formData.year}/${formData.population}/${formData.educationScore}`);
+      const response = await axios.get(`https://melbourne-housing-price-predictor.onrender.com/predict/${formData.bathrooms}/${formData.rooms}/${formData.distance}/${formData.bedrooms}/${formData.year}/${formData.population}/${formData.educationScore}`);
       setPredictedPrice(response.data.predicted_price);
 
       // Create data for line chart showing predictions at various distances
       const distance = [10, 20, 30, 40, 50];
       const predictions = await Promise.all(
         distance.map(dis =>
-          axios.get(`http://localhost:8000/predict/${dis}/${formData.bathrooms}/${formData.rooms}/${formData.bedrooms}/${formData.year}/${formData.population}/${formData.educationScore}`)
+          axios.get(`https://melbourne-housing-price-predictor.onrender.com/predict/${dis}/${formData.bathrooms}/${formData.rooms}/${formData.bedrooms}/${formData.year}/${formData.population}/${formData.educationScore}`)
             .then(res => res.data.predicted_price)
         )
       );
