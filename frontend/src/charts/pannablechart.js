@@ -70,7 +70,7 @@ const PannableChart = ({ data }) => {
       .attr('transform', `translate(0,0)`);
 
     // Add x-axis inside the scrollable group
-    const xAxis = chartGroup.append('g')
+    const _xAxis = chartGroup.append('g')
       .attr('transform', `translate(0,${height - margin.bottom})`)
       .call(d3.axisBottom(x));
 

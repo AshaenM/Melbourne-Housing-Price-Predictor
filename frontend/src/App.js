@@ -144,8 +144,8 @@ function App() {
 
   // State to store predicted price and error/loading indicators
   const [predictedPrice, setPredictedPrice] = useState(null);
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [_error, setError] = useState('');
+  const [_loading, setLoading] = useState(false);
   const [chartData, setChartData] = useState(null);
 
   // Form submission handler for making prediction request
