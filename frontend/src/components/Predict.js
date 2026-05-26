@@ -115,9 +115,11 @@ const Predict = ({ formData, handleInputChange, handleSubmit, suburbs }) => {
           name="educationScore"
           value={formData.educationScore}
           onChange={handleInputChange}
+          helperText="Typical range: 500 - 1600"
           slotProps={{
             htmlInput: {
-              min: 1,
+              min: 500,
+              max: 1600,
             }
           }}
         />

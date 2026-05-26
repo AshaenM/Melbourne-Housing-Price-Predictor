@@ -7,7 +7,7 @@ import Feedback from './components/Feedback';
 import FeedbackIcon from '@mui/icons-material/Feedback';
 import CloseIcon from '@mui/icons-material/Close';
 import suburbsData from './finaldata.json';
-import {Line} from 'react-chartjs-2'
+import { Line } from 'react-chartjs-2'
 import axios from 'axios';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 
@@ -103,7 +103,7 @@ function App() {
       averagePrice: item.totalPrice / item.count, // Calculate average price
       averageEducationScore: item.totalEducationScore / item.count // Calculate average education score
     }));
-  
+
   // State for suburb list, feedback, snackbar notifications, and chart data
   const [suburbs, setSuburbs] = useState([]);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -149,12 +149,12 @@ function App() {
   const [chartData, setChartData] = useState(null);
 
   // Form submission handler for making prediction request
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setPredictedPrice(null);
     setLoading(true);
-    
+
     if (!formData.suburb) {
       alert("Please select a suburb.");
       return;
@@ -183,8 +183,8 @@ function App() {
       alert("Population must be greater than 0.");
       return;
     }
-    if (formData.educationScore < 1) {
-      alert("Education Score must be greater than 0.");
+    if (formData.educationScore < 500) {
+      alert("Education Score must be between 500 and 1600.");
       return;
     }
 
@@ -202,8 +202,8 @@ function App() {
         )
       );
 
-     const newChartData ={
-      labels: distance, // X-axis labels (square footage)
+      const newChartData = {
+        labels: distance, // X-axis labels (square footage)
         datasets: [
           {
             label: 'Predicted Prices in $ millions',
@@ -214,7 +214,7 @@ function App() {
           },
           {
             label: 'Your Prediction',
-            data: [{x: parseInt(formData.distance), y: response.data.predicted_price}],
+            data: [{ x: parseInt(formData.distance), y: response.data.predicted_price }],
             borderColor: 'rgb(255, 99, 132)',
             backgroundColor: 'rgba(255, 99, 132, 0.5)',
             pointRadius: 8,
@@ -225,13 +225,13 @@ function App() {
       };
 
       setChartData(newChartData);  // Set the chart data in state
-     
-   } catch (err) {
-     setError('Error predicting price. Please try again.');
-     console.error(err);
-   } finally {
-     setLoading(false);
-   }
+
+    } catch (err) {
+      setError('Error predicting price. Please try again.');
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
     // Proceed with form submission
     console.log(formData);
     setSnackbarOpen(true);
@@ -279,7 +279,7 @@ function App() {
   // App's component layout with AppBar, Tab Panels, and Snackbar for form notifications
   return (
     <Container component="main" sx={{ padding: 0 }}>
-      <Typography variant="h2" component="h1" gutterBottom align="center" sx={{backgroundColor: 'primary.main', color: 'white', p: 2, marginBottom: 0}}>
+      <Typography variant="h2" component="h1" gutterBottom align="center" sx={{ backgroundColor: 'primary.main', color: 'white', p: 2, marginBottom: 0 }}>
         Melbourne Housing Price Predictor
       </Typography>
       <AppBar position="static" sx={{ backgroundColor: 'primary.main', marginTop: 0 }}>
@@ -294,49 +294,49 @@ function App() {
         </Toolbar>
       </AppBar>
       {value === 0 && <Home barChartData={barChartData} pannableChartData={pannableChartData} scatterPlotData={scatterPlotData} />}
-      {value === 1 && <Predict formData={formData} handleInputChange={handleInputChange} handleSubmit={handleSubmit} suburbs={suburbs}/>}
+      {value === 1 && <Predict formData={formData} handleInputChange={handleInputChange} handleSubmit={handleSubmit} suburbs={suburbs} />}
       {value === 1 && predictedPrice && (
-            <Paper elevation={3} sx={{ p: 3 }}>
-              <Typography variant="h5" gutterBottom>
-                Predicted Price: ${predictedPrice.toLocaleString()}
-              </Typography>
-              {chartData && (
-                <Box sx={{ mt: 3 }}>
-                  <Line 
-                    data={chartData}
-                    options={{
-                      responsive: true,
-                      plugins: {
-                        legend: {
-                          position: 'top',
-                        },
-                        title: {
-                          display: true,
-                          text: 'Price Predictions by Distance'
-                        }
-                      },
-                      scales: {
-                        x: {
-                          type: 'linear',
-                          position: 'bottom',
-                          title: {
-                            display: true,
-                            text: 'Distance'
-                          }
-                        },
-                        y: {
-                          title: {
-                            display: true,
-                            text: 'Predicted Price ($)'
-                          }
-                        }
+        <Paper elevation={3} sx={{ p: 3 }}>
+          <Typography variant="h5" gutterBottom>
+            Predicted Price: ${predictedPrice.toLocaleString()}
+          </Typography>
+          {chartData && (
+            <Box sx={{ mt: 3 }}>
+              <Line
+                data={chartData}
+                options={{
+                  responsive: true,
+                  plugins: {
+                    legend: {
+                      position: 'top',
+                    },
+                    title: {
+                      display: true,
+                      text: 'Price Predictions by Distance'
+                    }
+                  },
+                  scales: {
+                    x: {
+                      type: 'linear',
+                      position: 'bottom',
+                      title: {
+                        display: true,
+                        text: 'Distance'
                       }
-                    }}
-                  />
-                </Box>
-              )}
-            </Paper>
+                    },
+                    y: {
+                      title: {
+                        display: true,
+                        text: 'Predicted Price ($)'
+                      }
+                    }
+                  }
+                }}
+              />
+            </Box>
           )}
+        </Paper>
+      )}
       {value === 2 && <About />}
       <Feedback open={snackbarOpen} onClose={handleSnackbarClose} />
       <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
@@ -350,7 +350,7 @@ function App() {
         onClose={handleFeedbackClose}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       >
-        <Box sx={{ p: 2, backgroundColor: 'white', borderRadius: 1, width: '300px', border: '1px solid black'}}>
+        <Box sx={{ p: 2, backgroundColor: 'white', borderRadius: 1, width: '300px', border: '1px solid black' }}>
           <Typography variant="h6" sx={{ mb: 2 }}>Submit Feedback</Typography>
           <TextField
             label="Name"
